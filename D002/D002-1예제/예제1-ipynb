@@ -1,0 +1,35 @@
+# ─────────────────────────────────────────────
+# 환경 준비 — 라이브러리 불러오기 + 한글 폰트 + 시드 고정
+# ─────────────────────────────────────────────
+# 필요 시 아래 주석을 해제해 설치하세요.
+# !pip install numpy pandas matplotlib seaborn -q
+
+import platform
+import warnings
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+warnings.filterwarnings("ignore")   # 학습 중 경고 메시지를 잠시 숨깁니다.
+
+# 재현성: 같은 난수를 항상 같게 만들어 결과가 매번 동일하도록 고정합니다.
+np.random.seed(42)
+
+# 한글 폰트 설정 (그래프 안 글자가 깨지지 않도록 운영체제별로 분기)
+system = platform.system()
+if system == "Darwin":          # macOS
+    plt.rcParams["font.family"] = "AppleGothic"
+elif system == "Windows":       # Windows
+    plt.rcParams["font.family"] = "Malgun Gothic"
+else:                            # Linux 등
+    plt.rcParams["font.family"] = "DejaVu Sans"
+
+plt.rcParams["axes.unicode_minus"] = False   # 마이너스 부호 깨짐 방지
+plt.rcParams["figure.figsize"] = (10, 5)
+sns.set_style("whitegrid")
+
+print("준비 완료! 라이브러리 버전을 확인합니다.")
+print("numpy :", np.__version__)
+print("pandas:", pd.__version__)
